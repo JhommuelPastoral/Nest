@@ -9,7 +9,7 @@ export default function ShowcaseSection() {
           Your thoughts, beautifully organized
         </h1>
         <p className="max-w-2xl mx-auto mt-6 text-lg text-gray-600 sm:text-lg">
-          A safe space to capture and revisit your story, designed with privacy and mindfulness at its core.
+          {`A safe space to capture and revisit your story, designed with privacy and mindfulness at its core.`}
         </p>
 
         {/* App Mockup */}
@@ -23,7 +23,7 @@ export default function ShowcaseSection() {
               <div className="flex flex-col h-full">
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 text-white bg-blue-600">
-                  <h3 className="font-semibold">Today's Entry</h3>
+                  <h3 className="font-semibold">{`Today's Entry`}</h3>
                   <div className="w-8 h-8 rounded-full bg-blue-300/50" />
                 </div>
 
@@ -44,15 +44,17 @@ export default function ShowcaseSection() {
                 {/* Bottom Action */}
                 <div className="p-4 border-t border-gray-300">
                   <div className="p-3 text-sm font-medium text-center text-blue-600 bg-blue-100 rounded-lg cursor-pointer">
-                    + New Entry
+                    {`+ New Entry`}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
-        <p className="mt-5 font-semibold font-nunito">A safe space to capture and revisit your story, designed with privacy and mindfulness at its core.</p>
+
+        <p className="mt-5 font-semibold font-nunito">
+          {`A safe space to capture and revisit your story, designed with privacy and mindfulness at its core.`}
+        </p>
       </div>
     </section>
   );

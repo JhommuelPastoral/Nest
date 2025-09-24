@@ -5,7 +5,7 @@ export default function TestimonialSection() {
     {
       name: "Jane Doe",
       role: "Writer",
-      text: "This app has completely transformed the way I capture my thoughts. It's simple, private, and beautifully designed.",
+      text: "This app has completely transformed the way I capture my thoughts. It&apos;s simple, private, and beautifully designed.",
       avatar: "https://i.pravatar.cc/100?img=32",
     },
     {
@@ -17,7 +17,7 @@ export default function TestimonialSection() {
     {
       name: "Emily Chen",
       role: "Entrepreneur",
-      text: "A perfect space for reflection. It's intuitive and visually pleasing, making journaling a joy.",
+      text: "A perfect space for reflection. It&apos;s intuitive and visually pleasing, making journaling a joy.",
       avatar: "https://i.pravatar.cc/100?img=44",
     },
   ];
@@ -29,7 +29,7 @@ export default function TestimonialSection() {
           What our users say
         </h2>
         <p className="max-w-2xl mx-auto mt-4 text-lg text-gray-600">
-          Real feedback from people who’ve transformed their journaling experience.
+          Real feedback from people who&#39;ve transformed their journaling experience.
         </p>
 
         <div className="grid gap-8 mt-12 sm:grid-cols-2 md:grid-cols-3">
@@ -44,7 +44,7 @@ export default function TestimonialSection() {
                 alt={testimonial.name}
                 className="w-16 h-16 mb-4 rounded-full"
               />
-              <p className="mb-4 text-gray-700">"{testimonial.text}"</p>
+              <p className="mb-4 text-gray-700">&quot;{testimonial.text}&quot;</p>
               <h4 className="font-semibold text-black">{testimonial.name}</h4>
               <span className="text-sm text-gray-500">{testimonial.role}</span>
             </div>
