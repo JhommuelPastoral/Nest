@@ -22,6 +22,10 @@ export const metadata: Metadata = {
   description:"Nest is your safe, private journaling space. Capture memories, reflect on experiences, and watch your personal growth unfold — all in a beautifully simple interface.",
   icons: {
     icon: "/nest-logo.png",
+  },
+  metadataBase: new URL("https://nest-347i.onrender.com/"),
+    verification: {
+    google: "8hb7MFQsbpPhTnKc9B9AM3_WWRWu92lxV3nHpVPFWiM"
   }
 };
 
