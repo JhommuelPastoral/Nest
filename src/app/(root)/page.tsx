@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight, Feather } from "lucide-react";
 import { ReactTyped } from "react-typed";
 import { Mouse } from 'lucide-react';
-
+import Link from "next/link";
 
 const PHRASES = [
   "Grow with them.",
@@ -52,16 +52,19 @@ export default function HeroSection() {
         </p>
 
         <div className="flex gap-4 mt-4 animate-fadeInUp">
-          <Button
-            size="lg"
-            className="bg-[#9BAB87] group text-white cursor-pointer font-nunito font-semibold rounded-full px-6 sm:px-8 flex items-center gap-2 hover:bg-[#85976f] transition-all"
-          >
-            Create your Nest
-            <ChevronRight
-              size={20}
-              className="transition-all group-hover:translate-x-1"
-            />
-          </Button>
+          <Link href={'/login'}>
+            <Button
+              size="lg"
+              className="bg-[#9BAB87] group text-white cursor-pointer font-nunito font-semibold rounded-full px-6 sm:px-8 flex items-center gap-2 hover:bg-[#85976f] transition-all"
+            >
+              Create your Nest
+              <ChevronRight
+                size={20}
+                className="transition-all group-hover:translate-x-1"
+              />
+            </Button>
+
+          </Link>
 
           <Button
             size="lg"

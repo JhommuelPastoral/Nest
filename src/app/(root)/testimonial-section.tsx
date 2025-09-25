@@ -1,5 +1,4 @@
-"use client";
-
+import Image from "next/image";
 export default function TestimonialSection() {
   const testimonials = [
     {
@@ -39,9 +38,11 @@ export default function TestimonialSection() {
               className="flex flex-col items-center p-6 text-center transition-all duration-300 bg-white shadow-lg rounded-2xl hover:translate-y-1"
               data-aos="fade-right"
             >
-              <img
+              <Image
                 src={testimonial.avatar}
                 alt={testimonial.name}
+                width={100}
+                height={100}
                 className="w-16 h-16 mb-4 rounded-full"
               />
               <p className="mb-4 text-gray-700">&quot;{testimonial.text}&quot;</p>
