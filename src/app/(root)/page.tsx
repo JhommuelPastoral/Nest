@@ -52,7 +52,7 @@ export default function HeroSection() {
         </p>
 
         <div className="flex gap-4 mt-4 animate-fadeInUp">
-          <Link href={'/login'}>
+          <Link href={'/register'}>
             <Button
               size="lg"
               className="bg-[#9BAB87] group text-white cursor-pointer font-nunito font-semibold rounded-full px-6 sm:px-8 flex items-center gap-2 hover:bg-[#85976f] transition-all"
@@ -65,18 +65,20 @@ export default function HeroSection() {
             </Button>
 
           </Link>
-
-          <Button
-            size="lg"
-            variant="outline"
-            className="font-nunito group cursor-pointer font-semibold rounded-full px-6 sm:px-8 border-[#9BAB87] text-[#9BAB87] flex items-center gap-2 hover:bg-[#f3f5ef] hover:text-[#6f7f5a] transition-all"
-          >
-            Enter your Nest
-            <Feather
-              size={18}
-              className="transition-transform opacity-70 group-hover:translate-x-1"
-            />
-          </Button>
+          <Link href={'/login'}>
+            <Button
+              size="lg"
+              variant="outline"
+              className="font-nunito group cursor-pointer font-semibold rounded-full px-6 sm:px-8 border-[#9BAB87] text-[#9BAB87] flex items-center gap-2 hover:bg-[#f3f5ef] hover:text-[#6f7f5a] transition-all"
+            >
+              Enter your Nest
+              <Feather
+                size={18}
+                className="transition-transform opacity-70 group-hover:translate-x-1"
+              />
+            </Button>
+          
+          </Link>
         </div>
       </div>
       <Mouse size={40} color="white" className="absolute bottom-4 animate-bounce" />

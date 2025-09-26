@@ -1,4 +1,3 @@
-"use client";
 
 export default function ShowcaseSection() {
   return (
@@ -17,8 +16,7 @@ export default function ShowcaseSection() {
           {/* Phone Frame */}
           <div className="relative inline-block p-4 bg-white shadow-xl rounded-3xl">
             <div
-              className="overflow-hidden bg-gray-100 shadow-md rounded-2xl"
-              style={{ width: "320px", height: "640px" }}
+              className="overflow-hidden bg-gray-100 shadow-md rounded-2xl w-[320px] h-[640px]"
             >
               <div className="flex flex-col h-full">
                 {/* Header */}
