@@ -16,7 +16,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if(!profile || !account) return false;
         const {email, name} = profile;
         if(!email || !name) return false;
-        const response = await axiosInstance.post("/auth/create-user", {name, email});
+        const response = await axiosInstance.post("/api/auth/create-user", {name, email});
         console.log("Sign in response:", response.data);
         return true;
       } catch (error) {
