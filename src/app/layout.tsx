@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/nest-logo.png",
   },
-  metadataBase: new URL("https://nest-347i.onrender.com/"),
+  metadataBase: new URL("https://nest-k07f.onrender.com"),
     verification: {
     google: "8hb7MFQsbpPhTnKc9B9AM3_WWRWu92lxV3nHpVPFWiM"
   }
