@@ -18,7 +18,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-sm border-none shadow-none">
         {/* Logo */}
         <div className="flex justify-center">
-          <Image src="/nest-logo.png" alt="Nest Logo" width={80} height={50} priority />
+          <Image src="/nest-logo.png" alt="Nest Logo" width={80} height={50} priority className="w-auto" />
         </div>
 
         <CardHeader className="text-center">
@@ -36,7 +36,7 @@ export default function LoginPage() {
           }}>
             <Button className="flex items-center justify-center w-full gap-2 cursor-pointer">
               <Github className="w-5 h-5" />
-              Log in with GitHub
+              Sign in with GitHub
             </Button>
           </form>
           <form
@@ -52,7 +52,7 @@ export default function LoginPage() {
                   width={18}
                   height={18}
                 />
-                Log in with Google
+                Sign in with Google
               </Button>
           </form>
         </CardContent>
