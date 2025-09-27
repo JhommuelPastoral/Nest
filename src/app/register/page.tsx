@@ -34,7 +34,7 @@ export default function RegisterPage() {
           
           <form action={async () =>{
             "use server";
-            await signIn('github');
+            await signIn('github', {redirectTo: '/dashboard'});
           }}>
             <Button className="flex items-center justify-center w-full gap-2 cursor-pointer">
               <Github className="w-5 h-5" />
@@ -46,7 +46,7 @@ export default function RegisterPage() {
           
           <form action={async () => {
             "use server";
-            await signIn('google');
+            await signIn('google', {redirectTo: '/dashboard'});
           }}>
             
             <Button className="flex items-center justify-center w-full gap-2 cursor-pointer">
