@@ -1,6 +1,7 @@
 "use client"
 
 import {
+
   Calendar,
   Home,
   Inbox,
@@ -23,14 +24,17 @@ import {
   SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar"
-import Image from "next/image"
-import Link from "next/link"
 
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 
 // Menu items
 const menuItems = [
@@ -47,14 +51,22 @@ const generalItems = [
   { title: "Logout", url: "/logout", icon: LogOut },
 ]
 
+
+
 export function AppSidebar() {
-  const { open } = useSidebar()
+  const { open } = useSidebar();
+  const pathname = usePathname()
+  const [clientPathname, setClientPathname] = useState('')
+
+  useEffect(()=>{
+    setClientPathname(pathname);
+  }, [pathname]);
 
   return (
     <Sidebar collapsible="icon" className="bg-white border-r">
       {/* Logo/Header */}
       <SidebarHeader>
-        <div className="flex items-center justify-center">
+        <span className="flex items-center justify-center">
           <Image
             src={"/nest-logo.png"}
             alt="Nest Logo"
@@ -69,7 +81,7 @@ export function AppSidebar() {
           >
             Nest
           </span>
-        </div>
+        </span>
       </SidebarHeader>
 
       <SidebarContent>
@@ -82,31 +94,20 @@ export function AppSidebar() {
             <SidebarMenu className="mt-2 space-y-1">
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild tooltip={item.title} >
                     <Link
                       href={item.url}
-                      className="flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-700 transition rounded-md hover:bg-gray-100 hover:text-black"
-                    >
-                      {/* Tooltip wrapper when closed */}
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <div className="flex items-center gap-2">
-                            <item.icon className="w-5 h-5 text-gray-500" />
-                            {open && <span>{item.title}</span>}
-                          </div>
-                        </TooltipTrigger>
-                        {!open && (
-                          <TooltipContent side="right">
-                            {item.title}
-                          </TooltipContent>
-                        )}
-                      </Tooltip>
-
-                      {open && item.badge && (
-                        <span className="ml-auto rounded-md bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-600">
-                          {item.badge}
+                      className={`flex items-center py-2 text-sm font-semibold transition rounded-md font-nunito 
+                      ${
+                        clientPathname === item.url
+                          ? "text-black font-bold"
+                          : "text-gray-500 hover:text-black"
+                      }`}                   
+                      > 
+                        <item.icon />
+                        <span>
+                          {item.title}
                         </span>
-                      )}
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -120,28 +121,25 @@ export function AppSidebar() {
           <SidebarGroupLabel className="px-4 mt-6 text-xs font-semibold text-gray-400 uppercase">
             General
           </SidebarGroupLabel>
+
           <SidebarGroupContent>
             <SidebarMenu className="mt-2 space-y-1">
               {generalItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild tooltip={item.title} >
                     <Link
                       href={item.url}
-                      className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 transition rounded-md hover:bg-gray-100 hover:text-black"
-                    >
-                      <Tooltip>
-                        <TooltipTrigger >
-                          <div className="flex items-center gap-2">
-                            <item.icon className="w-5 h-5 text-gray-500" />
-                            {open && <span>{item.title}</span>}
-                          </div>
-                        </TooltipTrigger>
-                        {!open && (
-                          <TooltipContent side="right">
+                      className={`flex items-center py-2 text-sm font-semibold transition rounded-md font-nunito 
+                      ${
+                        clientPathname === item.url
+                          ? "text-black font-bold bg-gray-400/25 hover:bg-gray-400/25"
+                          : "text-gray-500 hover:text-black hover:bg-gray-400"
+                      }`}                   
+                      > 
+                          <item.icon />
+                          <span>
                             {item.title}
-                          </TooltipContent>
-                        )}
-                      </Tooltip>
+                          </span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
