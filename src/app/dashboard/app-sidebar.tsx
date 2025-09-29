@@ -23,13 +23,10 @@ import {
   SidebarHeader,
   SidebarFooter,
   useSidebar,
+  
 } from "@/components/ui/sidebar"
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+
 
 import Image from "next/image"
 import Link from "next/link"
