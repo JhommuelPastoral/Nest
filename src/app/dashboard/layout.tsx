@@ -5,8 +5,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="flex flex-1" >
+      <main className="flex-row flex-1 md:flex" >
         <SidebarTrigger className="cursor-pointer"/>
+
         <div className="w-full">
           <SessionProvider>
             {children}

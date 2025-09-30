@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react"
 import Loading from "./loading"
-import { Mail, Bell, Search, Plus, MoveUpRight } from 'lucide-react';
+import { Mail, Bell, Search, Plus, MoveUpRight, Flame, Smile, BookOpen } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -10,12 +10,10 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
-
+import ChartBarLabel from "./_components/chart";
 export default function Dashboard() {
   const { data: session } = useSession()
 
@@ -64,7 +62,7 @@ export default function Dashboard() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 ">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,250px))] gap-4 justify-center md:justify-start ">
 
           <Card className="w-full gap-5 shadow-sm rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700">
             <CardHeader className="flex items-center justify-between">
@@ -82,12 +80,60 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
 
-          <div className="bg-gray-200 "></div>
-          <div className="bg-gray-200 "></div>
-          <div className="bg-gray-200 "></div>
-          <div className="bg-gray-200 "></div>
+          {/* Mood Entries */}
+          <Card className="w-full gap-5 shadow-sm rounded-2xl bg-gradient-to-r from-slate-500 via-slate-600 to-slate-800">
+            <CardHeader className="flex items-center justify-between">
+              <span className="text-lg font-semibold text-white">Mood Entries</span>
+              <div className="flex items-center justify-center p-1 bg-white rounded-full">
+                <Smile color="black" size={18} />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <span className="text-5xl font-semibold text-white">15</span>
+              <span className="block mt-1 text-sm text-emerald-400">+3 this week</span>
+            </CardContent>
+            <CardFooter>
+              <span className="text-xs text-gray-400">Logged moods</span>
+            </CardFooter>
+          </Card>
+
+          {/* Words Written */}
+          <Card className="w-full gap-5 shadow-sm rounded-2xl bg-gradient-to-r from-slate-300 via-slate-400 to-slate-500">
+            <CardHeader className="flex items-center justify-between">
+              <span className="text-lg font-semibold text-black">Words Written</span>
+              <div className="flex items-center justify-center p-1 bg-white rounded-full">
+                <BookOpen color="black" size={18} />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <span className="text-5xl font-semibold text-black">4.2k</span>
+              <span className="block mt-1 text-sm text-emerald-800">+9% from last week</span>
+            </CardContent>
+            <CardFooter>
+              <span className="text-xs text-gray-800">Across all journals</span>
+            </CardFooter>
+          </Card>
+
+          <Card className="w-full gap-5 shadow-sm rounded-2xl bg-gradient-to-r from-neutral-300 to-stone-400">
+            <CardHeader className="flex items-center justify-between">
+              <span className="text-lg font-semibold ">Active Streak</span>
+              <div className="flex items-center justify-center p-1 bg-white rounded-full">
+                <Flame color="black" size={18} />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <span className="text-5xl font-semibold ">7</span>
+              <span className="block mt-1 text-sm text-emerald-800">🔥 Keep it up!</span>
+            </CardContent>
+            <CardFooter>
+              <span className="text-xs text-gray-800">Consecutive days journaling</span>
+            </CardFooter>
+          </Card>
         </div>
 
+        <div className="w-[300px]">
+          <ChartBarLabel/>
+        </div>
       </main>
     
     </>
