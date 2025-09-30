@@ -23,7 +23,6 @@ import {
   SidebarHeader,
   SidebarFooter,
   useSidebar,
-  
 } from "@/components/ui/sidebar"
 
 
@@ -97,8 +96,8 @@ export function AppSidebar() {
                       className={`flex items-center py-2 text-sm font-semibold transition rounded-md font-nunito 
                       ${
                         clientPathname === item.url
-                          ? "text-black font-bold"
-                          : "text-gray-500 hover:text-black"
+                          ? "text-black font-bold bg-gray-300 "
+                          : "text-gray-500 "
                       }`}                   
                       > 
                         <item.icon />
@@ -149,10 +148,10 @@ export function AppSidebar() {
       {/* Promo Card */}
       <SidebarFooter className="px-3 py-4">
         {open && (
-          <div className="w-full p-4 text-center text-white bg-green-700 rounded-lg shadow-sm">
+          <div className="w-full p-4 text-center text-white rounded-lg shadow-sm bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700">
             <p className="text-sm font-medium">Download our Mobile App</p>
             <p className="text-xs text-green-100">Get easy in another way</p>
-            <button className="w-full px-3 py-1 mt-2 text-sm font-semibold text-green-700 bg-white rounded-md hover:bg-gray-100">
+            <button className="w-full px-3 py-1 mt-2 text-sm font-semibold text-black bg-white rounded-md hover:bg-gray-100">
               Download
             </button>
           </div>
