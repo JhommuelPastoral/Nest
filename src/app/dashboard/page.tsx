@@ -6,8 +6,7 @@ import { Mail, Bell, Search, Plus, MoveUpRight, Flame, Smile, BookOpen } from 'l
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-
+import Calendar from "./_components/calendar";
 import {
   Card,
   CardContent,
@@ -51,7 +50,7 @@ export default function Dashboard() {
           </div>
         </div>
       </header>
-      <main className="px-2 mt-2 space-y-4 font-nunito">
+      <main className="px-2 pb-20 mt-2 space-y-4 font-nunito">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">Dashboard</h1>
@@ -132,9 +131,20 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        <div className="w-full max-w-md">
-          <ChartBarLabel/>
+        <div className="grid w-full grid-flow-row grid-cols-3 gap-4">
+          <div className="col-span-2 ">
+            <ChartBarLabel />
+          </div>
+          <div className="row-span-2 border border-red-500">
+            Recent
+          </div>
+          <div className="w-full max-w-full col-span-2 overflow-x-scroll">
+            <Calendar/>
+          </div>
+
         </div>
+
+
       </main>
     
     </>

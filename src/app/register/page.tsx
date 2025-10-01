@@ -28,6 +28,7 @@ export default function RegisterPage() {
     });
   };
 
+  const disabled = isPending || isLoading;
 
   return (
     <div className="flex items-center justify-center min-h-screen font-nunito">
@@ -47,11 +48,11 @@ export default function RegisterPage() {
         </CardHeader>
 
         <CardContent className="space-y-3">
-            <Button className="flex items-center justify-center w-full gap-2 cursor-pointer" disabled={isPending} onClick={() => handleLogin("github")}>
+            <Button className="flex items-center justify-center w-full gap-2 cursor-pointer" disabled={disabled} onClick={() => handleLogin("github")}>
               <Github className="w-5 h-5" />
               Sign up with GitHub
             </Button>
-            <Button className="flex items-center justify-center w-full gap-2 cursor-pointer" disabled={isPending} onClick={() => handleLogin("google")}>
+            <Button className="flex items-center justify-center w-full gap-2 cursor-pointer" disabled={disabled} onClick={() => handleLogin("google")}>
               <Image
                 src="/google-icon.png"
                 alt="Google Logo"

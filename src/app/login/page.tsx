@@ -24,7 +24,6 @@ export default function LoginPage() {
 
     startTransition(async () => {
       await signIn(provider, { callbackUrl: "/dashboard" });
-      // no need to reset isLoading here, redirect will happen
     });
   };
 

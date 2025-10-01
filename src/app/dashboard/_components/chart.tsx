@@ -21,30 +21,37 @@ import {
 export const description = "A bar chart with a label"
 
 const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { month: "January", Mood: 186 },
+  { month: "February", Mood: 305 },
+  { month: "March", Mood: 237 },
+  { month: "April", Mood: 73 },
+  { month: "May", Mood: 209 },
+  { month: "June", Mood: 214 },
+  { month: "July", Mood: 10 },
+  { month: "August", Mood: 20 },
+  { month: "September", Mood: 30 },
+  { month: "October", Mood: 40 },
+  { month: "November", Mood: 50 },
+  { month: "December", Mood: 60 },
 ]
 
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "var(--chart-3)",
+    color: "var(--chart-6)",
   },
+
 } satisfies ChartConfig
 
 export default function ChartBarLabel() {
   return (
-    <Card>
+    <Card className="shadow-none bg-gradient-to-r from-gray-50 via-slate-200 to-gray-100">
       <CardHeader>
-        <CardTitle>Bar Chart - Label</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Mood</CardTitle>
+        <CardDescription>Your mood helps tell your story.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className="w-full max-h-40">
           <BarChart
             accessibilityLayer
             data={chartData}
@@ -64,7 +71,7 @@ export default function ChartBarLabel() {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8}>
+            <Bar dataKey="Mood" fill="var(--color-desktop)" radius={5} barSize={40}>
               <LabelList
                 position="top"
                 offset={12}
@@ -75,6 +82,7 @@ export default function ChartBarLabel() {
           </BarChart>
         </ChartContainer>
       </CardContent>
+      
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
           Trending up by 5.2% this month <TrendingUp className="w-4 h-4" />

@@ -55,7 +55,7 @@ export function AppSidebar() {
   }, [pathname]);
 
   return (
-    <Sidebar collapsible="icon" className="bg-white border-r">
+    <Sidebar collapsible="icon" className="border-r bg-gradient-to-r from-gray-50 to-gray-100">
       {/* Logo/Header */}
       <SidebarHeader>
         <span className="flex items-center justify-center">
@@ -93,7 +93,7 @@ export function AppSidebar() {
                       ${
                         clientPathname === item.url
                           ? "text-black font-bold bg-gray-300 "
-                          : "text-gray-500 "
+                          : "text-gray-500 hover:text-black "
                       }`}                   
                       > 
                         <item.icon />
@@ -124,8 +124,8 @@ export function AppSidebar() {
                       className={`flex items-center py-2 text-sm font-semibold transition rounded-md font-nunito 
                       ${
                         clientPathname === item.url
-                          ? "text-black font-bold bg-gray-400"
-                          : "text-gray-500 hover:text-black hover:bg-gray-400"
+                          ? "text-black font-bold bg-gray-300"
+                          : "text-gray-500 hover:text-black"
                       }`}                   
                       > 
                           <item.icon />
