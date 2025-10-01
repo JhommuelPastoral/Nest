@@ -1,3 +1,6 @@
+"use client"
+
+
 import {
   Card,
   CardContent,
@@ -10,9 +13,22 @@ import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { signIn } from "@/auth";
+import { signIn } from "next-auth/react"
+import { useTransition, useState } from "react";
 
 export default function RegisterPage() {
+  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = (provider: "github" | "google") => {
+    if (isPending) return; // prevent spamming
+    setIsLoading(true);
+    startTransition(async () => {
+      await signIn(provider, { callbackUrl: "/dashboard" });
+    });
+  };
+
+
   return (
     <div className="flex items-center justify-center min-h-screen font-nunito">
       <Card className="w-full max-w-sm border-none shadow-none">
@@ -31,25 +47,11 @@ export default function RegisterPage() {
         </CardHeader>
 
         <CardContent className="space-y-3">
-          
-          <form action={async () =>{
-            "use server";
-            await signIn('github', {redirectTo: '/dashboard'});
-          }}>
-            <Button className="flex items-center justify-center w-full gap-2 cursor-pointer">
+            <Button className="flex items-center justify-center w-full gap-2 cursor-pointer" disabled={isPending} onClick={() => handleLogin("github")}>
               <Github className="w-5 h-5" />
               Sign up with GitHub
             </Button>
-
-          </form>
-
-          
-          <form action={async () => {
-            "use server";
-            await signIn('google', {redirectTo: '/dashboard'});
-          }}>
-            
-            <Button className="flex items-center justify-center w-full gap-2 cursor-pointer">
+            <Button className="flex items-center justify-center w-full gap-2 cursor-pointer" disabled={isPending} onClick={() => handleLogin("google")}>
               <Image
                 src="/google-icon.png"
                 alt="Google Logo"
@@ -58,10 +60,6 @@ export default function RegisterPage() {
               />
               Sign up with Google
             </Button>
-
-
-          </form>
-
         </CardContent>
 
         <CardFooter className="justify-center text-sm">

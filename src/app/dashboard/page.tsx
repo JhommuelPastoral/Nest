@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+
 import {
   Card,
   CardContent,
@@ -50,7 +51,7 @@ export default function Dashboard() {
           </div>
         </div>
       </header>
-      <main className="px-2 mt-2 space-y-4 md:px-10 font-nunito">
+      <main className="px-2 mt-2 space-y-4 font-nunito">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">Dashboard</h1>
@@ -64,7 +65,7 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,250px))] gap-4 justify-center md:justify-start ">
 
-          <Card className="w-full gap-5 shadow-sm rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700">
+          <Card className="w-full gap-5 shadow-sm rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700" data-aos="fade-right">
             <CardHeader className="flex items-center justify-between">
               <span className="text-lg font-semibold text-white">Total Journals</span>
               <div className="flex items-center justify-center p-1 bg-white rounded-full">
@@ -81,7 +82,7 @@ export default function Dashboard() {
           </Card>
 
           {/* Mood Entries */}
-          <Card className="w-full gap-5 shadow-sm rounded-2xl bg-gradient-to-r from-slate-500 via-slate-600 to-slate-800">
+          <Card className="w-full gap-5 shadow-sm rounded-2xl bg-gradient-to-r from-slate-500 via-slate-600 to-slate-800" data-aos="fade-right">
             <CardHeader className="flex items-center justify-between">
               <span className="text-lg font-semibold text-white">Mood Entries</span>
               <div className="flex items-center justify-center p-1 bg-white rounded-full">
@@ -98,7 +99,7 @@ export default function Dashboard() {
           </Card>
 
           {/* Words Written */}
-          <Card className="w-full gap-5 shadow-sm rounded-2xl bg-gradient-to-r from-slate-300 via-slate-400 to-slate-500">
+          <Card className="w-full gap-5 shadow-sm rounded-2xl bg-gradient-to-r from-slate-300 via-slate-400 to-slate-500" data-aos="fade-right">
             <CardHeader className="flex items-center justify-between">
               <span className="text-lg font-semibold text-black">Words Written</span>
               <div className="flex items-center justify-center p-1 bg-white rounded-full">
@@ -114,7 +115,7 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
 
-          <Card className="w-full gap-5 shadow-sm rounded-2xl bg-gradient-to-r from-neutral-300 to-stone-400">
+          <Card className="w-full gap-5 shadow-sm rounded-2xl bg-gradient-to-r from-neutral-300 to-stone-400" data-aos="fade-right">
             <CardHeader className="flex items-center justify-between">
               <span className="text-lg font-semibold ">Active Streak</span>
               <div className="flex items-center justify-center p-1 bg-white rounded-full">
@@ -131,7 +132,7 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        <div className="w-[300px]">
+        <div className="w-full max-w-md">
           <ChartBarLabel/>
         </div>
       </main>

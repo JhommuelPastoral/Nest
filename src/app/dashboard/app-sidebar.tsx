@@ -1,7 +1,6 @@
 "use client"
 
 import {
-
   Calendar,
   Home,
   Inbox,
@@ -31,7 +30,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
-
+import { signOut } from "next-auth/react"
 // Menu items
 const menuItems = [
   { title: "Dashboard", url: "/dashboard", icon: Home },
@@ -44,10 +43,7 @@ const menuItems = [
 const generalItems = [
   { title: "Settings", url: "/dashboard/settings", icon: Settings },
   { title: "Help", url: "/help", icon: HelpCircle },
-  { title: "Logout", url: "/logout", icon: LogOut },
 ]
-
-
 
 export function AppSidebar() {
   const { open } = useSidebar();
@@ -80,7 +76,7 @@ export function AppSidebar() {
         </span>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="gap-2" >
         {/* Main Menu */}
         <SidebarGroup>
           <SidebarGroupLabel className="px-4 text-xs font-semibold text-gray-400 uppercase">
@@ -119,16 +115,16 @@ export function AppSidebar() {
           </SidebarGroupLabel>
 
           <SidebarGroupContent>
-            <SidebarMenu className="mt-2 space-y-1">
+            <SidebarMenu className="mt-2 space-y-1 ">
               {generalItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.title} >
                   <SidebarMenuButton asChild tooltip={item.title} >
                     <Link
                       href={item.url}
                       className={`flex items-center py-2 text-sm font-semibold transition rounded-md font-nunito 
                       ${
                         clientPathname === item.url
-                          ? "text-black font-bold bg-gray-400/25 hover:bg-gray-400/25"
+                          ? "text-black font-bold bg-gray-400"
                           : "text-gray-500 hover:text-black hover:bg-gray-400"
                       }`}                   
                       > 
@@ -140,6 +136,14 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                onClick={() => {signOut()}}
+                  className="flex items-center py-2 text-sm font-semibold text-gray-500 transition rounded-md cursor-pointer font-nunito hover:text-black">
+                    <LogOut />
+                    <span>Logout</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

@@ -1,3 +1,4 @@
+"use client"
 import {
   Card,
   CardContent,
@@ -10,15 +11,38 @@ import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { signIn } from "@/auth";
+import { signIn } from "next-auth/react";
+import { useTransition, useState } from "react";
 
 export default function LoginPage() {
+  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = (provider: "github" | "google") => {
+    if (isLoading) return; // prevent spamming
+    setIsLoading(true);
+
+    startTransition(async () => {
+      await signIn(provider, { callbackUrl: "/dashboard" });
+      // no need to reset isLoading here, redirect will happen
+    });
+  };
+
+  const disabled = isPending || isLoading;
+
   return (
     <div className="flex items-center justify-center min-h-screen font-nunito">
       <Card className="w-full max-w-sm border-none shadow-none">
         {/* Logo */}
         <div className="flex justify-center">
-          <Image src="/nest-logo.png" alt="Nest Logo" width={80} height={50} priority className="w-auto" />
+          <Image
+            src="/nest-logo.png"
+            alt="Nest Logo"
+            width={80}
+            height={50}
+            priority
+            className="w-auto"
+          />
         </div>
 
         <CardHeader className="text-center">
@@ -29,32 +53,25 @@ export default function LoginPage() {
         </CardHeader>
 
         <CardContent className="space-y-3">
-
-          <form action={async () =>{
-            "use server";
-            await signIn('github', {redirectTo: '/dashboard'});
-          }}>
-            <Button className="flex items-center justify-center w-full gap-2 cursor-pointer">
+          {/* GitHub Login */}
+          <Button
+            onClick={() => handleLogin("github")}
+            disabled={disabled}
+            className="flex items-center justify-center w-full gap-2 cursor-pointer"
+          >
               <Github className="w-5 h-5" />
               Sign in with GitHub
-            </Button>
-          </form>
-          <form
-            action={async () => {
-              "use server"
-              await signIn('google', {redirectTo: '/dashboard'});
-            }}
+          </Button>
+
+          {/* Google Login */}
+          <Button
+            onClick={() => handleLogin("google")}
+            disabled={disabled}
+            className="flex items-center justify-center w-full gap-2 cursor-pointer"
           >
-              <Button className="flex items-center justify-center w-full gap-2 cursor-pointer">
-                <Image
-                  src="/google-icon.png"
-                  alt="Google Logo"
-                  width={18}
-                  height={18}
-                />
-                Sign in with Google
-              </Button>
-          </form>
+            <Image src="/google-icon.png" alt="Google Logo" width={18} height={18} />
+            Sign in with Google
+          </Button>
         </CardContent>
 
         <CardFooter className="justify-center text-sm">
