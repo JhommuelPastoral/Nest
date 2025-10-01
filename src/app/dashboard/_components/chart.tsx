@@ -1,7 +1,7 @@
 "use client"
 
 import { TrendingUp } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis, LineChart, Line} from "recharts"
 
 import {
   Card,
@@ -38,7 +38,7 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "var(--chart-6)",
+    color: "var(--chart-4)",
   },
 
 } satisfies ChartConfig
@@ -51,8 +51,8 @@ export default function ChartBarLabel() {
         <CardDescription>Your mood helps tell your story.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="w-full max-h-40">
-          <BarChart
+        <ChartContainer config={chartConfig} className="w-full max-w-5xl max-h-40">
+          {/* <BarChart
             accessibilityLayer
             data={chartData}
             margin={{
@@ -79,7 +79,35 @@ export default function ChartBarLabel() {
                 fontSize={12}
               />
             </Bar>
-          </BarChart>
+          </BarChart> */}
+          <LineChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              left: 12,
+              right: 12,
+            }}
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="month"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              tickFormatter={(value) => value.slice(0, 3)}
+            />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <Line
+              dataKey="Mood"
+              type="linear"
+              stroke="var(--color-desktop)"
+              strokeWidth={2}
+              dot={false}
+            />
+          </LineChart>
         </ChartContainer>
       </CardContent>
       

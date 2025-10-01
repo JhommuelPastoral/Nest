@@ -34,7 +34,7 @@ export default function Calendar() {
   return (
     <Card className='w-full max-w-full overflow-auto'>
       <CardHeader>
-        <CardTitle>Mood</CardTitle>
+        <CardTitle>Journal Calendar</CardTitle>
         <CardDescription>Your mood helps tell your story.</CardDescription>
       </CardHeader>
       <CardContent className='w-full max-w-full overflow-auto'>
@@ -44,7 +44,7 @@ export default function Calendar() {
         colorScheme="light"
         renderBlock={(block, activity) => (
           <Tooltip>
-            <TooltipTrigger asChild>
+            <TooltipTrigger asChild className='cursor-pointer'>
               {block}
             </TooltipTrigger>
             <TooltipContent>
