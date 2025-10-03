@@ -1,7 +1,7 @@
 "use client"
 
 import { TrendingUp } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis, LineChart, Line} from "recharts"
+import { CartesianGrid, XAxis, LineChart, Line} from "recharts"
 
 import {
   Card,
@@ -38,7 +38,7 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "var(--chart-4)",
+    color: "var(--chart-5)",
   },
 
 } satisfies ChartConfig
@@ -47,7 +47,7 @@ export default function ChartBarLabel() {
   return (
     <Card className="shadow-none bg-gradient-to-r from-gray-50 via-slate-200 to-gray-100">
       <CardHeader>
-        <CardTitle>Mood</CardTitle>
+        <CardTitle>Journal Statistic</CardTitle>
         <CardDescription>Your mood helps tell your story.</CardDescription>
       </CardHeader>
       <CardContent>
@@ -105,7 +105,7 @@ export default function ChartBarLabel() {
               type="linear"
               stroke="var(--color-desktop)"
               strokeWidth={2}
-              dot={false}
+              dot={true}
             />
           </LineChart>
         </ChartContainer>

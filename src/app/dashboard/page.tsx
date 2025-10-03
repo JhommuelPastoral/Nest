@@ -2,10 +2,9 @@
 
 import { useSession } from "next-auth/react"
 import Loading from "./loading"
-import { Mail, Bell, Search, Plus, MoveUpRight, Flame, Smile, BookOpen } from 'lucide-react';
+import { Mail, Bell, Search, MoveUpRight, Flame, Smile, BookOpen } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import Calendar from "./_components/calendar";
 import {
   Card,
@@ -15,6 +14,7 @@ import {
 } from "@/components/ui/card"
 import ChartBarLabel from "./_components/chart";
 import Recent from "./_components/recent";
+import NewJournalModal from "./_components/new-journal";
 export default function Dashboard() {
   const { data: session } = useSession()
 
@@ -57,10 +57,11 @@ export default function Dashboard() {
             <h1 className="text-2xl font-bold">Dashboard</h1>
             <p className="text-sm text-gray-500">Plan, priotize, and reflect on your thoughts and experiences.</p>
           </div>
-          <Button className="flex items-center gap-2 cursor-pointer group">
+          {/* <Button className="flex items-center gap-2 cursor-pointer group">
             <Plus className="w-4 h-4 group-hover:animate-rotate"/>
             <span >New Journal</span>
-          </Button>
+          </Button> */}
+          <NewJournalModal />
         </div>
 
         <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,250px))] gap-4 justify-center md:justify-start ">
