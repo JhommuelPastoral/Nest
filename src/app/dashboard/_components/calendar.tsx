@@ -12,54 +12,50 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+
 const data = [
   {
-    date: '2024-02-01',
+    date: '2024-01-01',
     count: 2,
     level: 1,
   },
-
   {
     date: '2024-12-31',
     count: 2,
     level: 1,
   }
-
 ]
-
-
-
 
 export default function Calendar() {
   return (
-    <Card className='w-full max-w-full overflow-auto'>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Journal Calendar</CardTitle>
         <CardDescription>Your mood helps tell your story.</CardDescription>
       </CardHeader>
-      <CardContent className='w-full max-w-full overflow-auto'>
-      <ActivityCalendar
-        data={data}
-        showWeekdayLabels
-        colorScheme="light"
-        renderBlock={(block, activity) => (
-          <Tooltip>
-            <TooltipTrigger asChild className='cursor-pointer'>
-              {block}
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>
-                {`${activity.count} activities on ${activity.date}`}
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        )}
-      />
+      <CardContent className="w-full overflow-x-auto">
+        <div className="flex">
+          <ActivityCalendar
+            data={data}
+            showWeekdayLabels
+            colorScheme="light"
+            blockSize={12}       // ⬅️ shrink block size (default is 12 or 15)
+            blockMargin={2}      // ⬅️ space between blocks
+            renderBlock={(block, activity) => (
+              <Tooltip>
+                <TooltipTrigger asChild className="cursor-pointer">
+                  {block}
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    {`${activity.count} activities on ${activity.date}`}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          />
+        </div>
       </CardContent>
-          
     </Card>
-
   )
-  
-  
 }
