@@ -39,8 +39,8 @@ export default function Calendar() {
             data={data}
             showWeekdayLabels
             colorScheme="light"
-            blockSize={12}       // ⬅️ shrink block size (default is 12 or 15)
-            blockMargin={2}      // ⬅️ space between blocks
+            blockSize={12}       
+            blockMargin={2}      
             renderBlock={(block, activity) => (
               <Tooltip>
                 <TooltipTrigger asChild className="cursor-pointer">

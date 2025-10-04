@@ -13,7 +13,9 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { Plus } from "lucide-react"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 
 export default function NewJournalModal() {
   const onSubmit = (e: React.FormEvent) => {
@@ -24,38 +26,70 @@ export default function NewJournalModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="flex items-center gap-2 cursor-pointer group">
-          <Plus className="w-4 h-4 group-hover:animate-rotate"/>
+        <Button className="flex items-center gap-2 shadow-sm cursor-pointer group ">
+          <Plus className="w-4 h-4 transition-transform duration-200 group-hover:rotate-90"/>
           <span>New Journal</span>
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[480px] rounded-2xl shadow-lg border border-slate-200 bg-gradient-to-br from-white to-slate-50">
         <form onSubmit={onSubmit}>
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you&apos;re
-              done.
+            <DialogTitle className="text-lg font-semibold text-slate-800">
+              ✍️ Make a New Journal
+            </DialogTitle>
+            <DialogDescription className="text-sm text-slate-500">
+              Write your thoughts, reflections, or daily notes here.
             </DialogDescription>
           </DialogHeader>
 
-          <div className="grid gap-4">
-            <div className="grid gap-3">
-              <Label htmlFor="name-1">Name</Label>
-              <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
+          <div className="grid gap-4 mt-4">
+            <div className="grid gap-2">
+              <Label htmlFor="title">Journal Title</Label>
+              <Input
+                id="title"
+                name="title"
+                placeholder="My reflections today..."
+                className="rounded-lg"
+              />
             </div>
-            <div className="grid gap-3">
-              <Label htmlFor="username-1">Username</Label>
-              <Input id="username-1" name="username" defaultValue="@peduarte" />
+
+            <div className="grid gap-2">
+              <Label htmlFor="content">Journal Content</Label>
+              <Textarea
+                id="content"
+                name="content"
+                placeholder="Start writing your journal..."
+                rows={6}
+                className="rounded-lg"
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label>Mood</Label>
+              <Select>
+                <SelectTrigger className="rounded-lg">
+                  <SelectValue placeholder="How are you feeling?" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="happy">😊 Happy</SelectItem>
+                  <SelectItem value="sad">😢 Sad</SelectItem>
+                  <SelectItem value="excited">🤩 Excited</SelectItem>
+                  <SelectItem value="calm">😌 Calm</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="mt-6">
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" className="rounded-lg">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Save changes</Button>
+            <Button
+              type="submit"
+            >
+              Save Journal
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
