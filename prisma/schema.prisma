@@ -19,4 +19,16 @@ model User{
   name String
   email String @unique
   provider String
+  post Post[]
+}
+
+model Post {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  title String
+  content String
+  mood String
+  user User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  wordsCount Int 
 }

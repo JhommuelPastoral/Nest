@@ -19,7 +19,6 @@ export default function Dashboard() {
   const { data: session } = useSession()
 
   if (!session) return <Loading />
-  
   return (
     <>
       <header className="flex items-center justify-between gap-5 px-2 py-2 md:px-10 font-nunito">
@@ -57,11 +56,8 @@ export default function Dashboard() {
             <h1 className="text-2xl font-bold">Dashboard</h1>
             <p className="text-sm text-gray-500">Plan, priotize, and reflect on your thoughts and experiences.</p>
           </div>
-          {/* <Button className="flex items-center gap-2 cursor-pointer group">
-            <Plus className="w-4 h-4 group-hover:animate-rotate"/>
-            <span >New Journal</span>
-          </Button> */}
-          <NewJournalModal />
+
+          <NewJournalModal userId={session.user?.id || ""} />
         </div>
 
         <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,250px))] gap-4 justify-center md:justify-start ">
@@ -138,7 +134,7 @@ export default function Dashboard() {
             <ChartBarLabel />
           </div>
           <div className="row-span-2 ">
-            <Recent/>
+            <Recent userId={session.user?.id || ""}/>
           </div>
           <div className="w-full max-w-full col-span-2 overflow-x-scroll">
             <Calendar/>
