@@ -38,6 +38,8 @@ export default function NewJournalModal({userId} :{userId: string}) {
     wordsCount: 0
   });
   const queryClient = useQueryClient();
+
+  
   const { mutate: createJournal, isPending: isCreating } = useMutation({
     mutationFn: addJournal,
     onSuccess: () => {

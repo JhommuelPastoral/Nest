@@ -5,9 +5,8 @@ export async function GET(req: Request, {params} : {params: Promise< {userId: st
 
   try {
     const { userId } =  await params;
-    console.log("User ID:", userId);
     if (!userId) return NextResponse.json({error: "Missing userId"}, {status: 400});
-    const journals = await prisma.post.findMany({where: {userId: userId}});
+    const journals = await prisma.post.findMany({where: {userId: userId}, orderBy: {createdAt: "desc"}});
     return NextResponse.json({message: "Journal fetched successfully", journals}, {status: 200});
   } catch (error) {
     console.log("Get journal error:", error);
