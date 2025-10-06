@@ -45,12 +45,12 @@ const chartConfig = {
 
 export default function ChartBarLabel() {
   return (
-    <Card className="shadow-none bg-gradient-to-r from-gray-50 via-slate-200 to-gray-100">
+    <Card className="relative h-full shadow-none bg-gradient-to-r from-gray-50 via-slate-200 to-gray-100">
       <CardHeader>
         <CardTitle>Journal Statistic</CardTitle>
         <CardDescription>Your mood helps tell your story.</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative">
         <ChartContainer config={chartConfig} className="w-full max-w-5xl max-h-40">
           {/* <BarChart
             accessibilityLayer
@@ -111,7 +111,7 @@ export default function ChartBarLabel() {
         </ChartContainer>
       </CardContent>
       
-      <CardFooter className="flex-col items-start gap-2 text-sm">
+      <CardFooter className="absolute flex-col items-start gap-2 text-sm bottom-2">
         <div className="flex gap-2 font-medium leading-none">
           Trending up by 5.2% this month <TrendingUp className="w-4 h-4" />
         </div>

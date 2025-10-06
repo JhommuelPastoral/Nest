@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Card,
@@ -6,65 +6,79 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import { getJournal } from "../api-handler";
+import { NotebookPen } from "lucide-react";
 
-import {getJournal} from "../api-handler"
-
-type journalProps = {
+type JournalProps = {
   id: string;
   title: string;
   content: string;
   mood: string;
   createdAt: Date;
   wordsCount: number;
-}
+};
 
-
-
-import { useQuery } from "@tanstack/react-query";
-export default function Recent({userId}: {userId: string}) {
-
-  const { data:journals =[] } = useQuery({
+export default function Recent({ userId }: { userId: string }) {
+  const { data: journals = [] } = useQuery({
     queryKey: ["journals", userId],
-    queryFn: () => getJournal({userId}),
+    queryFn: () => getJournal({ userId }),
     enabled: !!userId,
     select: (data) => data.journals,
   });
-  console.log(journals);
+
   return (
-    <Card className="h-full shadow-none bg-gradient-to-r from-gray-50 via-slate-200 to-gray-100">
-      <CardHeader>
-        <CardTitle>Recent Journal</CardTitle>
-        <CardDescription>Keep track of your most recent reflections and thoughts</CardDescription>
+    <Card className="h-full transition-shadow duration-300 border shadow-sm bg-gradient-to-br from-gray-50 via-white to-slate-100 hover:shadow-md">
+      <CardHeader className="pb-4">
+        <div className="flex items-center gap-2">
+          <NotebookPen className="w-5 h-5 text-slate-700" />
+          <CardTitle className="text-lg font-semibold text-slate-800">
+            Recent Journals
+          </CardTitle>
+        </div>
+        <CardDescription className="text-sm text-slate-500">
+          Keep track of your most recent reflections and thoughts
+        </CardDescription>
       </CardHeader>
-      <CardContent>
-      {journals.slice(0, 5).map((journal : journalProps) => (
-      <div
-        key={journal.id}
-        className="pb-3 mb-3 border-b border-slate-200 last:border-0 last:pb-0 last:mb-0 max-h-[100px] h-full"
-      >
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold truncate text-slate-800 sm:text-base">
-            {journal.title}
-          </h3>
-          <span className="px-2 py-0.5 text-xs rounded-full bg-slate-100 text-slate-700 border border-slate-200">
-            {journal.mood}
-          </span>
-        </div>
 
-        {/* Content */}
-        <p className="w-full mt-1 text-sm text-slate-600 line-clamp-2">
-          {journal.content}
-        </p>
+      <CardContent className="space-y-3">
+        {journals.slice(0, 5).map((journal: JournalProps) => (
+          <div
+            key={journal.id}
+            className="p-3 transition-all duration-300 border cursor-pointer group rounded-xl border-slate-200 bg-white/70 backdrop-blur-sm hover:bg-slate-900 hover:text-white"
+          >
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-semibold truncate sm:text-base group-hover:text-slate-50">
+                {journal.title}
+              </h3>
+              <span className="px-2 py-0.5 text-xs rounded-full bg-slate-100 text-slate-800 border border-slate-200 group-hover:bg-slate-800 group-hover:text-white">
+                {journal.mood}
+              </span>
+            </div>
 
-        {/* Footer */}
-        <div className="flex items-center justify-between mt-2 text-xs text-slate-500">
-          <span>{new Date(journal.createdAt).toLocaleString()}</span>
-          <span>{journal.wordsCount} words</span>
-        </div>
-      </div>
-        
-      ))}
+            <p className="mt-1 text-sm text-slate-600 line-clamp-2 group-hover:text-slate-200">
+              {journal.content}
+            </p>
+
+            <div className="flex items-center justify-between mt-3 text-xs text-slate-500 group-hover:text-slate-300">
+              <span>
+                {new Date(journal.createdAt).toLocaleDateString("en-CA", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+              <span>{journal.wordsCount} words</span>
+            </div>
+          </div>
+        ))}
+
+        {journals.length === 0 && (
+          <div className="py-6 text-sm text-center text-slate-500">
+            No journals yet. Start writing your first one ✍️
+          </div>
+        )}
       </CardContent>
     </Card>
   );

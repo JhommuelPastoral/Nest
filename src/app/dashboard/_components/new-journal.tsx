@@ -134,10 +134,10 @@ export default function NewJournalModal({userId} :{userId: string}) {
                   <SelectValue placeholder="How are you feeling?" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="happy">😊 Happy</SelectItem>
-                  <SelectItem value="sad">😢 Sad</SelectItem>
-                  <SelectItem value="excited">🤩 Excited</SelectItem>
-                  <SelectItem value="calm">😌 Calm</SelectItem>
+                  <SelectItem value="Happy">😊 Happy</SelectItem>
+                  <SelectItem value="Sad">😢 Sad</SelectItem>
+                  <SelectItem value="Excited">🤩 Excited</SelectItem>
+                  <SelectItem value="Calm">😌 Calm</SelectItem>
                 </SelectContent>
               </Select>
             </div>

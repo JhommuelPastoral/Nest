@@ -129,14 +129,14 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        <div className="grid w-full grid-flow-row grid-cols-3 gap-4">
-          <div className="col-span-2 ">
+        <div className="grid items-start w-full grid-flow-row grid-cols-3 gap-4">
+          <div className="h-full col-span-2">
             <ChartBarLabel />
           </div>
           <div className="row-span-2 ">
             <Recent userId={session.user?.id || ""}/>
           </div>
-          <div className="w-full max-w-full col-span-2 overflow-x-scroll">
+          <div className="w-full h-full max-w-full col-span-2">
             <Calendar/>
           </div>
 
