@@ -15,12 +15,39 @@ import {
 import ChartBarLabel from "./_components/chart";
 import Recent from "./_components/recent";
 import NewJournalModal from "./_components/new-journal";
-export default function Dashboard() {
-  const { data: session } = useSession()
+import { useQuery } from "@tanstack/react-query";
+import { getJournal } from "./api-handler";
+import { useEffect, useState } from "react";
+type JournalProps = {
+  id: string;
+  title: string;
+  content: string;
+  mood: string;
+  createdAt: Date;
+  wordsCount: number;
+};
 
-  if (!session) return <Loading />
+export default function Dashboard() {
+  const { data: session } = useSession();
+  const [wordsCount, setWordsCount] = useState(0);
+  
+  const { data: journals = [], isLoading } = useQuery({
+    queryKey: ["journals", session?.user?.id],
+    queryFn: () => getJournal({ userId: session?.user?.id as string }),
+    enabled: !!session?.user?.id,
+    select: (data) => data.journals,
+  });
+  
+  useEffect(() => {
+    if(journals.length > 0) {
+      const totalWords = journals.reduce((acc : number, journal : JournalProps) => acc + journal.wordsCount, 0);
+      setWordsCount(totalWords);
+    } 
+  },[journals]);
+  if (!session || isLoading) {return <Loading />}
   return (
     <>
+     
       <header className="flex items-center justify-between gap-5 px-2 py-2 md:px-10 font-nunito">
         <div>
           <div className="relative w-full max-w-sm">
@@ -70,7 +97,7 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
-              <span className="text-5xl font-semibold text-white">24</span>
+              <span className="text-5xl font-semibold text-white">{journals.length}</span>
               <span className="block mt-1 text-sm text-emerald-400">+12% growth</span>
             </CardContent>
             <CardFooter>
@@ -87,7 +114,7 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
-              <span className="text-5xl font-semibold text-white">15</span>
+              <span className="text-5xl font-semibold text-white">{journals.length}</span>
               <span className="block mt-1 text-sm text-emerald-400">+3 this week</span>
             </CardContent>
             <CardFooter>
@@ -104,7 +131,7 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
-              <span className="text-5xl font-semibold text-black">4.2k</span>
+              <span className="text-5xl font-semibold text-black">{wordsCount} </span>
               <span className="block mt-1 text-sm text-emerald-800">+9% from last week</span>
             </CardContent>
             <CardFooter>
