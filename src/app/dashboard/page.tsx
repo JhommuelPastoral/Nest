@@ -164,7 +164,7 @@ export default function Dashboard() {
             <Recent userId={session.user?.id || ""}/>
           </div>
           <div className="w-full h-full max-w-full col-span-2">
-            <Calendar/>
+            <Calendar userId={session.user?.id || ""}/>
           </div>
 
         </div>

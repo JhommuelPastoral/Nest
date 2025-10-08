@@ -1,3 +1,5 @@
+"use client"
+
 import { ActivityCalendar } from 'react-activity-calendar'
 import {
   Card,
@@ -13,6 +15,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import { useQuery } from '@tanstack/react-query'
+import { getJournal } from '../api-handler'
+import { useEffect, useState } from 'react'
 const data = [
   {
     date: '2024-01-01',
@@ -25,8 +30,51 @@ const data = [
     level: 1,
   }
 ]
+type dataCalendarProps = {
+  date: string;
+  count: number;
+  level: number
+}
 
-export default function Calendar() {
+export default function Calendar({ userId }: { userId: string }) {
+  const [dataCalendar, setDataCalendar] = useState<dataCalendarProps[]>([]);
+  const { data: journals } = useQuery({
+    queryKey: ["journals", userId],
+    queryFn: () => getJournal({userId}),
+    enabled: !!userId,
+    select: (data) => data.journals,
+  });
+  useEffect(() => {
+    if (!journals) return;
+
+    // Step 1: map journals to { date, count, level }
+    const dateArray: dataCalendarProps[] = journals.map((journal: { createdAt: Date }) => ({
+      date: new Date(journal.createdAt).toISOString().split("T")[0], // ✅ gives "YYYY-MM-DD"
+      count: 1,
+      level: 1,
+    }));
+
+    // Step 2: merge same dates and increase count
+    const dataMap: Record<string, dataCalendarProps> = {};
+
+    for (let i = 0; i < dateArray.length; i++) {
+      const currentDate = dateArray[i].date;
+      if (dataMap[currentDate]) {
+        dataMap[currentDate].count += 1;
+      } else {
+        dataMap[currentDate] = { ...dateArray[i] };
+      }
+    }
+
+    // Step 3: convert back to array for ActivityCalendar
+    const finalData = Object.values(dataMap);
+
+    console.log(dataMap); // ✅ check output in console
+    setDataCalendar(finalData);
+  }, [journals]);
+
+
+
   return (
     <Card className="w-full">
       <CardHeader>
