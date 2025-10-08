@@ -18,62 +18,53 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import { getJournal } from '../api-handler'
 import { useEffect, useState } from 'react'
-const data = [
-  {
-    date: '2024-01-01',
-    count: 2,
-    level: 1,
-  },
-  {
-    date: '2024-12-31',
-    count: 2,
-    level: 1,
-  }
-]
+
 type dataCalendarProps = {
-  date: string;
-  count: number;
+  date: string
+  count: number
   level: number
 }
 
 export default function Calendar({ userId }: { userId: string }) {
-  const [dataCalendar, setDataCalendar] = useState<dataCalendarProps[]>([]);
-  const { data: journals } = useQuery({
+  const [dataCalendar, setDataCalendar] = useState<dataCalendarProps[]>([])
+
+  const { data: journals = [] } = useQuery({
     queryKey: ["journals", userId],
-    queryFn: () => getJournal({userId}),
+    queryFn: () => getJournal({ userId }),
     enabled: !!userId,
     select: (data) => data.journals,
-  });
+  })
+
   useEffect(() => {
-    if (!journals) return;
+    if (!journals) return
 
-    // Step 1: map journals to { date, count, level }
-    const dateArray: dataCalendarProps[] = journals.map((journal: { createdAt: Date }) => ({
-      date: new Date(journal.createdAt).toISOString().split("T")[0], // ✅ gives "YYYY-MM-DD"
-      count: 1,
-      level: 1,
-    }));
+    const year = new Date().getFullYear() // ✅ auto current year
+    const startDate = new Date(`${year}-01-01`)
+    const endDate = new Date(`${year}-12-31`)
+    const allDays: dataCalendarProps[] = []
 
-    // Step 2: merge same dates and increase count
-    const dataMap: Record<string, dataCalendarProps> = {};
-
-    for (let i = 0; i < dateArray.length; i++) {
-      const currentDate = dateArray[i].date;
-      if (dataMap[currentDate]) {
-        dataMap[currentDate].count += 1;
-      } else {
-        dataMap[currentDate] = { ...dateArray[i] };
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+      const dateStr = d.toISOString().split("T")[0]
+      allDays.push({ date: dateStr, count: 0, level: 0 })
+    }
+    const dateMap: Record<string, dataCalendarProps> = {}
+    for (const day of allDays) dateMap[day.date] = day
+    for (const journal of journals) {
+      const date = new Date(journal.createdAt).toISOString().split("T")[0]
+      if (dateMap[date]) {
+        dateMap[date].count += 1
+        dateMap[date].level = Math.min(4, dateMap[date].count)
       }
     }
 
-    // Step 3: convert back to array for ActivityCalendar
-    const finalData = Object.values(dataMap);
+    setDataCalendar(Object.values(dateMap))
+  }, [journals])
 
-    console.log(dataMap); // ✅ check output in console
-    setDataCalendar(finalData);
-  }, [journals]);
-
-
+  const safeData =dataCalendar.length > 0? dataCalendar :
+    [
+      { date: '2025-01-01', count: 0, level: 0 },
+      { date: '2025-12-31', count: 0, level: 0 },
+    ]
 
   return (
     <Card className="w-full">
@@ -84,11 +75,11 @@ export default function Calendar({ userId }: { userId: string }) {
       <CardContent className="w-full overflow-x-auto">
         <div className="flex">
           <ActivityCalendar
-            data={data}
+            data={safeData} // ✅ never empty
             showWeekdayLabels
             colorScheme="light"
-            blockSize={12}       
-            blockMargin={2}      
+            blockSize={12}
+            blockMargin={2}
             renderBlock={(block, activity) => (
               <Tooltip>
                 <TooltipTrigger asChild className="cursor-pointer">
@@ -96,7 +87,9 @@ export default function Calendar({ userId }: { userId: string }) {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    {`${activity.count} activities on ${activity.date}`}
+                    {`${activity.count} journal${
+                      activity.count !== 1 ? 's' : ''
+                    } on ${activity.date}`}
                   </p>
                 </TooltipContent>
               </Tooltip>
