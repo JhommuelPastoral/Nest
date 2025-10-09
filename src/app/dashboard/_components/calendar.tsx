@@ -59,7 +59,7 @@ export default function Calendar({ userId }: { userId: string }) {
     };
     dateMap[endDate] = { date: endDate, count: 0, level: 0 };
     return Object.values(dateMap);
-  }, [journals]);
+  }, [journals, startDate, endDate]);
 
   const safeData = dataCalendar && dataCalendar.length > 0? dataCalendar :
   [
