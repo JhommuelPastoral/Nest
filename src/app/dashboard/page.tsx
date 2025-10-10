@@ -158,7 +158,7 @@ export default function Dashboard() {
 
         <div className="grid items-start w-full grid-flow-row grid-cols-3 gap-4">
           <div className="h-full col-span-2">
-            <ChartBarLabel />
+            <ChartBarLabel userId={session.user?.id || ""}/>
           </div>
           <div className="row-span-2 ">
             <Recent userId={session.user?.id || ""}/>
@@ -168,8 +168,6 @@ export default function Dashboard() {
           </div>
 
         </div>
-
-
       </main>
     
     </>
