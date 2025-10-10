@@ -39,32 +39,28 @@ export default function ChartBarLabel({ userId }: { userId: string }) {
     queryFn: () => getJournal({ userId }),
     select: (data) => data.journals,
     enabled: !!userId,
-  })
+  });
 
   const journalData = useMemo(() => {
-    const now = new Date()
-    const currentYear = now.getFullYear()
+    const now = new Date();
+    const currentYear = now.getFullYear();
 
-    // Prepare all 12 months first
     const months = [
       "January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
-    ]
+    ];
 
-    // Count journals per month for the current year
     const counts = months.map((month, index) => {
       const monthCount = journals.filter((j: Journal) => {
         const date = new Date(j.createdAt)
         return date.getFullYear() === currentYear && date.getMonth() === index
       }).length
 
-      return { month, Mood: monthCount }
-    });
-
+      return { month, Mood: monthCount };
+    }); 
     return counts;
   }, [journals])
 
-  console.log(journalData)
 
   return (
     <Card className="relative h-full shadow-none bg-gradient-to-r from-gray-50 via-slate-200 to-gray-100">
