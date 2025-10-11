@@ -17,8 +17,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-import { getJournal } from "../api-handler"
-import { useQuery } from "@tanstack/react-query"
+
 import { useMemo } from "react"
 
 const chartConfig = {
@@ -33,13 +32,18 @@ type Journal = {
   mood: string
 }
 
-export default function ChartBarLabel({ userId }: { userId: string }) {
-  const { data: journals = [] } = useQuery({
-    queryKey: ["journals", userId],
-    queryFn: () => getJournal({ userId }),
-    select: (data) => data.journals,
-    enabled: !!userId,
-  });
+type JournalProps = {
+  id: string;
+  title: string;
+  content: string;
+  mood: string;
+  createdAt: string;
+  wordsCount: number;
+};
+
+
+export default function ChartBarLabel({ journals=[] }: { journals: JournalProps[] }) {
+  
 
   const journalData = useMemo(() => {
     const now = new Date();
@@ -51,15 +55,44 @@ export default function ChartBarLabel({ userId }: { userId: string }) {
     ];
 
     const counts = months.map((month, index) => {
-      const monthCount = journals.filter((j: Journal) => {
-        const date = new Date(j.createdAt)
-        return date.getFullYear() === currentYear && date.getMonth() === index
-      }).length
+      const monthCount = journals.filter((j : Journal) => {
+        const date = new Date(j.createdAt);
+        return date.getFullYear() === currentYear && date.getMonth() === index;
+      }).length;
 
       return { month, Mood: monthCount };
     }); 
     return counts;
-  }, [journals])
+  }, [journals]);
+  const renderFooter = () => {
+    const currentMonth = new Date().getMonth();
+    const prevCount = currentMonth > 0 ? journalData[currentMonth - 1]?.Mood || 0 : 0;
+    const currentCount = journalData[currentMonth]?.Mood || 0;
+    const diff = currentCount - prevCount;
+    const growth = prevCount > 0 ? (diff / prevCount) * 100 : 0;
+    const growthDisplay = Math.abs(growth).toFixed(1);
+
+    return (
+      <>
+        <div className="flex gap-2 font-medium leading-none">
+          {diff >= 0 ? (
+            <>
+              Trending up by {growthDisplay}% this month{" "}
+              <TrendingUp className="w-4 h-4 text-green-500" />
+            </>
+          ) : (
+            <>
+              Slight drop of {growthDisplay}% this month{" "}
+              <TrendingUp className="w-4 h-4 text-red-500 rotate-180" />
+            </>
+          )}
+        </div>
+        <div className="leading-none text-muted-foreground">
+          Showing total journals for {new Date().getFullYear()}
+        </div>
+      </>
+    );
+  };
 
 
   return (
@@ -69,12 +102,12 @@ export default function ChartBarLabel({ userId }: { userId: string }) {
         <CardDescription>Your mood helps tell your story.</CardDescription>
       </CardHeader>
 
-      <CardContent className="relative">
-        <ChartContainer config={chartConfig} className="w-full max-w-5xl max-h-40">
+      <CardContent className="pb-10">
+        <ChartContainer config={chartConfig} className="w-full h-full max-w-5xl max-h-50 ">
           <LineChart
             accessibilityLayer
             data={journalData}
-            margin={{ left: 12, right: 12 }}
+            margin={{ left: 12, right: 12, top: 10, bottom: 0 }}
           >
             <CartesianGrid vertical={false} />
             <XAxis
@@ -96,14 +129,12 @@ export default function ChartBarLabel({ userId }: { userId: string }) {
         </ChartContainer>
       </CardContent>
 
-      <CardFooter className="absolute flex-col items-start gap-2 text-sm bottom-2">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="w-4 h-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total journals for the current year
-        </div>
-      </CardFooter>
+    <CardFooter className="absolute flex-col items-start gap-2 text-sm bottom-2">
+      {renderFooter()}
+    </CardFooter>
+
     </Card>
   )
 }
+
+

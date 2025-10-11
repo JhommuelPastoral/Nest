@@ -157,14 +157,16 @@ export default function Dashboard() {
         </div>
 
         <div className="grid items-start w-full grid-flow-row grid-cols-3 gap-4">
-          <div className="h-full col-span-2">
-            <ChartBarLabel userId={session.user?.id || ""}/>
+          <div className="h-full col-span-2 ">
+            {/* <ChartBarLabel userId={session.user?.id || ""}/> */}
+          <ChartBarLabel journals={journals}/>
+
           </div>
           <div className="row-span-2 ">
-            <Recent userId={session.user?.id || ""}/>
+            <Recent journals={journals}/>
           </div>
           <div className="w-full h-full max-w-full col-span-2">
-            <Calendar userId={session.user?.id || ""}/>
+            <Calendar journals={journals}/>
           </div>
 
         </div>

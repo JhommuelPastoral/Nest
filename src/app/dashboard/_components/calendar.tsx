@@ -15,8 +15,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import { useQuery } from '@tanstack/react-query'
-import { getJournal } from '../api-handler'
 import { useMemo } from 'react'
 
 type dataCalendarProps = {
@@ -25,18 +23,23 @@ type dataCalendarProps = {
   level: number
 }
 
-export default function Calendar({ userId }: { userId: string }) {
+type JournalProps = {
+  id: string;
+  title: string;
+  content: string;
+  mood: string;
+  createdAt: Date;
+  wordsCount: number;
+};
 
-  const { data: journals = [] } = useQuery({
-    queryKey: ["journals", userId],
-    queryFn: () => getJournal({ userId }),
-    enabled: !!userId,
-    select: (data) => data.journals,
-  });
+
+export default function Calendar({ journals =[] }: { journals: JournalProps[] }) {
+
+
   
-  const year = new Date().getFullYear();
-  const startDate = new Date(`${year}-01-01`).toISOString().split("T")[0];
-  const endDate = new Date(`${year}-12-31`).toISOString().split("T")[0];
+  const Currentyear = new Date().getFullYear();
+  const startDate = new Date(`${Currentyear}-01-01`).toISOString().split("T")[0];
+  const endDate = new Date(`${Currentyear}-12-31`).toISOString().split("T")[0];
 
 
   const dataCalendar = useMemo(() => {
@@ -45,6 +48,9 @@ export default function Calendar({ userId }: { userId: string }) {
     dateMap[startDate] = { date: startDate, count: 0, level: 0 };
     for (const journal of journals) {
       const date = new Date(journal.createdAt).toISOString().split("T")[0];
+      const year = new Date(journal.createdAt).getFullYear();
+
+      if(year !== year) continue;
       if (dateMap[date]) {
         dateMap[date].count += 1;
 
