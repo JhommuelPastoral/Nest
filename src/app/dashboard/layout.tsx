@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <SidebarProvider>
       <AppSidebar />
       <main className="flex-row flex-1 md:flex" >
-        <SidebarTrigger className="cursor-pointer"/>
+        <SidebarTrigger className="sticky top-0 z-50 cursor-pointer"/>
 
         <div className="w-full">
           <SessionProvider>

@@ -32,7 +32,7 @@ export default function RecentJournalModal({ setIsOpen, journal }: RecentJournal
 
         <button
           onClick={() => setIsOpen(false)}
-          className="w-full py-2 mt-6 text-white rounded-md bg-slate-800 hover:bg-slate-700"
+          className="w-full py-2 mt-6 text-white rounded-md cursor-pointer bg-slate-800 hover:bg-slate-700"
         >
           Close
         </button>

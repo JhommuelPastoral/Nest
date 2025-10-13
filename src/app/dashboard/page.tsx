@@ -30,7 +30,6 @@ type JournalProps = {
 export default function Dashboard() {
   const { data: session } = useSession();
   const [wordsCount, setWordsCount] = useState(0);
-  
   const { data: journals = [], isLoading } = useQuery({
     queryKey: ["journals", session?.user?.id],
     queryFn: () => getJournal({ userId: session?.user?.id as string }),
