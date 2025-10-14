@@ -13,10 +13,19 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, Smile, BookText, Pencil, Trash2 } from "lucide-react";
+import { CalendarDays, Smile, BookText, MoreHorizontalIcon  } from "lucide-react";
 import NewJournalModal from "../_components/new-journal";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+import DeleteModal from "../_components/delete-modal";
 
 
 type JournalProps = {
@@ -50,7 +59,7 @@ export default function Journals() {
 
   return (
     <main className="w-full min-h-screen p-3 font-nunito">
-      <header className="sticky top-0 flex items-center justify-between mb-10 bg-white">
+      <header className="sticky z-20 flex items-center justify-between mb-10 bg-white top-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-gray-900">
             Your Journals
@@ -71,11 +80,11 @@ export default function Journals() {
           </p>
         </div>
       ) : (
-        <div className="grid max-w-xl grid-cols-1 gap-4 mx-auto">
+        <div className="grid max-w-2xl grid-cols-1 gap-4 mx-auto">
           {journals.map((journal: JournalProps) => (
             <Card
               key={journal.id}
-              className="rounded-md shadow-none "
+              className="pt-6 pb-4 rounded-md shadow-none"
             >
               <CardHeader className="flex justify-between">
                 <div className="flex gap-2">
@@ -90,12 +99,22 @@ export default function Journals() {
                     <span className="flex items-center gap-1 text-xs text-gray-500">
                       <CalendarDays size={14} />{" "}
                       {new Date(journal.createdAt).toLocaleDateString()}
-                    </span>                  </div>
+                    </span>                  
+                  </div>
                 </div>
                 <div className="space-x-2">
-                  <Button size={"sm"} variant={"outline"} className="cursor-pointer"> <Pencil /> </Button>
-                  <Button size={"sm"} variant={"destructive"} className="cursor-pointer"> <Trash2/> </Button>
 
+                  <DropdownMenu modal={false}>
+                    <DropdownMenuTrigger className="cursor-pointer" asChild >
+                      <Button variant="ghost" aria-label="Open menu">
+                        <MoreHorizontalIcon size={10} />
+                      </Button>                    
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="center">
+                      <DropdownMenuItem  className="w-full cursor-pointer" onSelect={(e) => e.preventDefault()}> Edit</DropdownMenuItem>
+                      <DropdownMenuItem  className="cursor-pointer " onSelect={(e) => e.preventDefault()}> <DeleteModal journalId={journal.id} userId = {session?.user?.id as string}/> </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </CardHeader>
 
@@ -104,7 +123,7 @@ export default function Journals() {
                 <CardDescription>{journal.content}</CardDescription>
               </CardContent>
 
-              <CardFooter className="flex justify-between text-sm text-gray-500 ">
+              <CardFooter className="flex justify-between text-sm text-gray-500 border-t [.border-t]:pt-2 ">
                 <span className="flex items-center gap-1">
                   <BookText size={14} /> {journal.wordsCount} {journal.wordsCount === 1 ? "word" : "words"}
                 </span>

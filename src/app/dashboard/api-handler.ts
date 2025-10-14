@@ -31,4 +31,15 @@ export async function getJournal({userId}:{userId: string}){
   }
   return false;
   
-}
+};
+
+export async function deleteJournal({journalId}:{journalId: string}){
+  try {
+    const response = await axiosInstance.delete(`/api/journal/deletejournal/${journalId}`);
+    if(response.status !== 200) return false;
+    return response.data;
+  } catch (error) {
+    console.log("Delete journal error:", error);
+  }
+  return false;
+};
