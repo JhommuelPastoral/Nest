@@ -33,8 +33,8 @@ export default function DeleteModal({ journalId, userId }: { journalId: string, 
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <span className="w-full text-red-500 ">Delete</span>
+      <DialogTrigger asChild className="flex items-start justify-start ">
+        <Button variant="ghost" className="w-full h-auto p-0 text-red-500 cursor-pointer" type="button">Delete</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[480px] rounded-2xl shadow-lg border border-slate-200 bg-gradient-to-br from-white to-slate-50">

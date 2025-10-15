@@ -12,3 +12,4 @@ export async function DELETE(req: Request, {params} : {params: Promise< {journal
     return NextResponse.json({error: "Something went wrong"}, {status: 500});
   }
 }
+

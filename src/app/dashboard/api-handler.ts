@@ -43,3 +43,14 @@ export async function deleteJournal({journalId}:{journalId: string}){
   }
   return false;
 };
+
+export async function updateJournal({journalId, newJournal}:{journalId: string, newJournal: journalProps}){
+  try {
+    const response = await axiosInstance.patch(`/api/journal/updatejournal/${journalId}`, newJournal);
+    if(response.status !== 200) return false;
+    return response.data;
+  } catch (error) {
+    console.log("Update journal error:", error);
+  }
+  return false;
+};

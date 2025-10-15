@@ -110,7 +110,7 @@ export default function NewJournalModal({userId} :{userId: string}) {
                 placeholder="My reflections today..."
                 className="rounded-lg"
                 value={newJournal.title}
-                onChange={(e) => setNewJournal({ ...newJournal, title: e.target.value })}
+                onChange={(e) => setNewJournal((prev) => ({ ...prev, title: e.target.value }))}
               />
             </div>
 
@@ -123,13 +123,13 @@ export default function NewJournalModal({userId} :{userId: string}) {
                 rows={6}
                 className="rounded-lg max-h-[300px]"
                 value={newJournal.content}
-                onChange={(e) => setNewJournal({ ...newJournal, content: e.target.value })}
+                onChange={(e) => setNewJournal((prev) => ({ ...prev, content: e.target.value }))}
               />
             </div>
 
             <div className="grid gap-2">
               <Label>Mood</Label>
-              <Select onValueChange={(value)=> {setNewJournal({ ...newJournal, mood: value })}}>
+              <Select onValueChange={(value)=> {setNewJournal((prev) => ({ ...prev, mood: value }))}}>
                 <SelectTrigger className="rounded-lg">
                   <SelectValue placeholder="How are you feeling?" />
                 </SelectTrigger>

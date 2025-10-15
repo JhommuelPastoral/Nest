@@ -23,6 +23,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu"
 
 import DeleteModal from "../_components/delete-modal";
@@ -37,6 +38,7 @@ type JournalProps = {
   wordsCount: number;
   createdAt: string;
 };
+import EditModal from "../_components/edit-modal";
 
 export default function Journals() {
   const { data: session } = useSession();
@@ -49,13 +51,6 @@ export default function Journals() {
 
   if (!session || isLoading) return <Loading />;
 
-  const handleEdit = (id: string) => {
-    console.log("Edit journal:", id);
-  };
-
-  const handleDelete = (id: string) => {
-    console.log("Delete journal:", id);
-  };
 
   return (
     <main className="w-full min-h-screen p-3 font-nunito">
@@ -103,16 +98,20 @@ export default function Journals() {
                   </div>
                 </div>
                 <div className="space-x-2">
-
-                  <DropdownMenu modal={false}>
+                  <DropdownMenu modal={false} >
                     <DropdownMenuTrigger className="cursor-pointer" asChild >
                       <Button variant="ghost" aria-label="Open menu">
                         <MoreHorizontalIcon size={10} />
                       </Button>                    
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="center">
-                      <DropdownMenuItem  className="w-full cursor-pointer" onSelect={(e) => e.preventDefault()}> Edit</DropdownMenuItem>
-                      <DropdownMenuItem  className="cursor-pointer " onSelect={(e) => e.preventDefault()}> <DeleteModal journalId={journal.id} userId = {session?.user?.id as string}/> </DropdownMenuItem>
+                    <DropdownMenuContent align="start" className="p-2 space-y-2">
+                      <DropdownMenuItem asChild >
+                        <EditModal journal={journal} userId={session?.user?.id as string} />
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator/>
+                      <DropdownMenuItem asChild>
+                        <DeleteModal journalId={journal.id} userId = {session?.user?.id as string}/>
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
