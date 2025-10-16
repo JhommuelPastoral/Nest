@@ -121,7 +121,7 @@ export default function NewJournalModal({userId} :{userId: string}) {
                 name="content"
                 placeholder="Start writing your journal..."
                 rows={6}
-                className="rounded-lg max-h-[300px]"
+                className="rounded-lg max-h-[300px] min-h-[150px]"
                 value={newJournal.content}
                 onChange={(e) => setNewJournal((prev) => ({ ...prev, content: e.target.value }))}
               />

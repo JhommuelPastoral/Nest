@@ -54,7 +54,7 @@ export default function Dashboard() {
             <Input 
               type="text" 
               placeholder="Search..." 
-              className="pl-10" // add left padding so text doesn't overlap the icon
+              className="pl-10"
             />
           </div>
         </div>

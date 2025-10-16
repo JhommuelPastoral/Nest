@@ -14,9 +14,8 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CalendarDays, Smile, BookText, MoreHorizontalIcon  } from "lucide-react";
-import NewJournalModal from "../_components/new-journal";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
 
 import {
   DropdownMenu,
@@ -27,6 +26,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import DeleteModal from "../_components/delete-modal";
+import EditModal from "../_components/edit-modal";
+import NewJournalModal from "../_components/new-journal";
 
 
 type JournalProps = {
@@ -38,7 +39,6 @@ type JournalProps = {
   wordsCount: number;
   createdAt: string;
 };
-import EditModal from "../_components/edit-modal";
 
 export default function Journals() {
   const { data: session } = useSession();
