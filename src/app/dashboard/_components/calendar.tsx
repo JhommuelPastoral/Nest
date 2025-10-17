@@ -50,7 +50,7 @@ export default function Calendar({ journals =[] }: { journals: JournalProps[] })
       const date = new Date(journal.createdAt).toISOString().split("T")[0];
       const year = new Date(journal.createdAt).getFullYear();
 
-      if(year !== year) continue;
+      if(Currentyear !== year) continue;
       if (dateMap[date]) {
         dateMap[date].count += 1;
 

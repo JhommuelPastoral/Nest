@@ -17,7 +17,7 @@ import Recent from "./_components/recent";
 import NewJournalModal from "./_components/new-journal";
 import { useQuery } from "@tanstack/react-query";
 import { getJournal } from "./api-handler";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 type JournalProps = {
   id: string;
   title: string;
@@ -27,9 +27,20 @@ type JournalProps = {
   wordsCount: number;
 };
 
+type dataCalendarProps = {
+  date: string
+  count: number
+  level: number
+}
+
+
+
 export default function Dashboard() {
   const { data: session } = useSession();
   const [wordsCount, setWordsCount] = useState(0);
+  const [growth, setGrowth] = useState("");
+  const [wordsWriten, setWordsWriten] = useState("");
+  const [moodGrowth, setMoodGrowth] = useState("");
   const { data: journals = [], isLoading } = useQuery({
     queryKey: ["journals", session?.user?.id],
     queryFn: () => getJournal({ userId: session?.user?.id as string }),
@@ -41,12 +52,68 @@ export default function Dashboard() {
     if(journals.length > 0) {
       const totalWords = journals.reduce((acc : number, journal : JournalProps) => acc + journal.wordsCount, 0);
       setWordsCount(totalWords);
+      
     } 
   },[journals]);
+
+  const dataCalendar = useMemo(() => {
+    if(!journals) return;
+    if(journals.length === 0) return;
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    
+    const Currentyear = new Date().getFullYear();
+
+    const counts = months.map((month, index) => {
+      const monthCount = journals.filter((j : JournalProps) => {
+        const date = new Date(j.createdAt);
+        return date.getFullYear() === Currentyear && date.getMonth() === index;
+      }).length;
+
+      const wordCounts = journals.reduce((acc : number, journal : JournalProps) => {
+        const date = new Date(journal.createdAt);
+        if(date.getFullYear() === Currentyear && date.getMonth() === index) {
+          acc += journal.wordsCount;
+        }
+        return acc;
+      }, 0);
+      return { month, Mood: monthCount, wordsCount: wordCounts };
+    }); 
+    return counts;
+    
+  },[journals]);
+
+  useEffect(() => {
+    if (!dataCalendar || dataCalendar.length === 0) return;
+
+    const currentMonth = new Date().getMonth();
+    const prevMonth = currentMonth - 1;
+
+    const prevCount = prevMonth >= 0 ? dataCalendar[prevMonth]?.Mood || 0 : 0;
+    const currentCount = dataCalendar[currentMonth]?.Mood || 0;
+
+    const diff = currentCount - prevCount;
+    const growth = prevCount > 0 ? (diff / prevCount) * 100 : 0;
+    const growthDisplay = growth.toFixed(1);
+
+    const growthMood = prevMonth >= 0 ? (dataCalendar[currentMonth]?.Mood || 0) - (dataCalendar[prevMonth]?.Mood || 0) : 0;
+
+    const prevWordsWritten =prevMonth >= 0 ? dataCalendar[prevMonth]?.wordsCount || 0 : 0;
+    const diffWords = (dataCalendar[currentMonth]?.wordsCount || 0) - prevWordsWritten;
+    const growthWords = prevWordsWritten > 0 ? (diffWords / prevWordsWritten) * 100 : 0;
+    const growthWordsDisplay = growthWords.toFixed(1);
+
+    setGrowth(growthDisplay);
+    setMoodGrowth(growthMood.toString());
+    setWordsWriten(growthWordsDisplay);
+  }, [dataCalendar]);
+
+
   if (!session || isLoading) {return <Loading />}
   return (
     <>
-     
       <header className="flex items-center justify-between gap-5 px-2 py-2 md:px-10 font-nunito">
         <div>
           <div className="relative w-full max-w-sm">
@@ -97,10 +164,10 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent>
               <span className="text-5xl font-semibold text-white">{journals.length}</span>
-              <span className="block mt-1 text-sm text-emerald-400">+12% growth</span>
+              <span className="block mt-1 text-sm text-emerald-400">+{growth}% growth</span>
             </CardContent>
             <CardFooter>
-              <span className="text-xs text-gray-400">Compared to last 7 days</span>
+              <span className="text-xs text-gray-400">Compared to last month</span>
             </CardFooter>
           </Card>
 
@@ -114,7 +181,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent>
               <span className="text-5xl font-semibold text-white">{journals.length}</span>
-              <span className="block mt-1 text-sm text-emerald-400">+3 this week</span>
+              <span className="block mt-1 text-sm text-emerald-400">+{moodGrowth} this month</span>
             </CardContent>
             <CardFooter>
               <span className="text-xs text-gray-400">Logged moods</span>
@@ -131,7 +198,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent>
               <span className="text-5xl font-semibold text-black">{wordsCount} </span>
-              <span className="block mt-1 text-sm text-emerald-800">+9% from last week</span>
+              <span className="block mt-1 text-sm text-emerald-800">+{wordsCount}% from last week</span>
             </CardContent>
             <CardFooter>
               <span className="text-xs text-gray-800">Across all journals</span>
