@@ -36,7 +36,7 @@ const menuItems = [
   { title: "Dashboard", url: "/dashboard", icon: Home },
   { title: "Journals", url: "/dashboard/journals", icon: Inbox },
   { title: "Calendar", url: "/calendar", icon: Calendar },
-  { title: "Analytics", url: "/analytics", icon: BarChart3 },
+  { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
   { title: "Team", url: "/team", icon: Users },
 ]
 
